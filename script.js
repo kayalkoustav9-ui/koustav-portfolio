@@ -96,6 +96,60 @@ if (hero && !motionPreference.matches) {
   });
 }
 
+const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+const heroArtwork = document.querySelector(".hero-art");
+if (heroArtwork && finePointer.matches && !motionPreference.matches) {
+  heroArtwork.addEventListener("pointermove", (event) => {
+    if (event.pointerType !== "mouse") return;
+    const bounds = heroArtwork.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+    heroArtwork.style.setProperty("--portrait-tilt-x", `${(x * 7).toFixed(2)}deg`);
+    heroArtwork.style.setProperty("--portrait-tilt-y", `${(-y * 5).toFixed(2)}deg`);
+    heroArtwork.style.setProperty("--note-shift-x", `${(-x * 10).toFixed(1)}px`);
+    heroArtwork.style.setProperty("--note-shift-y", `${(-y * 8).toFixed(1)}px`);
+  });
+  heroArtwork.addEventListener("pointerleave", () => {
+    ["--portrait-tilt-x", "--portrait-tilt-y", "--note-shift-x", "--note-shift-y"].forEach((property) => heroArtwork.style.removeProperty(property));
+  });
+}
+
+if (finePointer.matches && !motionPreference.matches) {
+  document.querySelectorAll(".project-card, .project-feature").forEach((card) => {
+    card.addEventListener("pointermove", (event) => {
+      if (event.pointerType !== "mouse") return;
+      const bounds = card.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width;
+      const y = (event.clientY - bounds.top) / bounds.height;
+      card.style.setProperty("--tilt-x", `${((x - 0.5) * 5).toFixed(2)}deg`);
+      card.style.setProperty("--tilt-y", `${((0.5 - y) * 4).toFixed(2)}deg`);
+      card.style.setProperty("--spot-x", `${(x * 100).toFixed(1)}%`);
+      card.style.setProperty("--spot-y", `${(y * 100).toFixed(1)}%`);
+    });
+    card.addEventListener("pointerleave", () => {
+      ["--tilt-x", "--tilt-y", "--spot-x", "--spot-y"].forEach((property) => card.style.removeProperty(property));
+    });
+  });
+}
+
+const sectionLinks = Array.from(navigation.querySelectorAll("a[href^='#']"));
+if ("IntersectionObserver" in window) {
+  const sectionObserver = new IntersectionObserver((entries) => {
+    const currentSection = entries.find((entry) => entry.isIntersecting);
+    if (!currentSection) return;
+    sectionLinks.forEach((link) => {
+      const isActive = link.hash === `#${currentSection.target.id}`;
+      link.classList.toggle("is-active", isActive);
+      if (isActive) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
+    });
+  }, { rootMargin: "-30% 0px -55% 0px", threshold: 0 });
+  sectionLinks.forEach((link) => {
+    const section = document.querySelector(link.hash);
+    if (section) sectionObserver.observe(section);
+  });
+}
+
 if ("IntersectionObserver" in window && !motionPreference.matches) {
   revealTargets.forEach((element) => element.classList.add("reveal"));
   const observer = new IntersectionObserver((entries, activeObserver) => {
