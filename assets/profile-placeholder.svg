@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 620" role="img" aria-labelledby="title desc">
+  <title id="title">Portrait placeholder</title>
+  <desc id="desc">Replace this placeholder with a professional portrait of Koustav Kayal.</desc>
+  <rect width="520" height="620" fill="#e7e1d7"/>
+  <path d="M0 444 165 279l76 76 78-107 201 201v171H0Z" fill="#d7d8d2"/>
+  <path d="M0 512 180 342l115 114 91-97 134 130v34H0Z" fill="#c7cec8"/>
+  <circle cx="395" cy="119" r="38" fill="#d5bca0"/>
+  <path d="M35 0h58M35 0v58m450-58h-58m58 0v58M35 620h58m-58 0v-58m450 58h-58m58 0v-58" fill="none" stroke="#9b9e97" stroke-width="2"/>
+  <text x="44" y="224" fill="#303b49" font-family="Arial,sans-serif" font-size="86" font-weight="600" letter-spacing="-8">KK</text>
+  <text x="48" y="254" fill="#58616b" font-family="Arial,sans-serif" font-size="11" letter-spacing="2">PORTRAIT PLACEHOLDER</text>
+  <text x="48" y="276" fill="#58616b" font-family="Arial,sans-serif" font-size="11" letter-spacing=".5">Add your photograph at assets/koustav-kayal.jpg</text>
+</svg>
