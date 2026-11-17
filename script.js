@@ -1,5 +1,24 @@
 document.documentElement.classList.add("js-enabled");
 
+const siteHeader = document.querySelector(".site-header");
+const scrollProgress = document.querySelector(".scroll-progress");
+let scrollUpdateQueued = false;
+
+function updateScrollChrome() {
+  const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = scrollableHeight > 0 ? Math.min(window.scrollY / scrollableHeight, 1) : 0;
+  scrollProgress.style.transform = `scaleX(${progress})`;
+  siteHeader.classList.toggle("is-scrolled", window.scrollY > 32);
+  scrollUpdateQueued = false;
+}
+
+window.addEventListener("scroll", () => {
+  if (scrollUpdateQueued) return;
+  scrollUpdateQueued = true;
+  window.requestAnimationFrame(updateScrollChrome);
+}, { passive: true });
+updateScrollChrome();
+
 const menuButton = document.querySelector(".menu-toggle");
 const navigation = document.querySelector(".primary-nav");
 
@@ -50,8 +69,33 @@ contactForm.addEventListener("submit", (event) => {
   window.location.href = mailto;
 });
 
-const revealTargets = document.querySelectorAll(".section-kicker, .intro-grid, .skills-block, .project-feature, .project-card, .experience-entry, .capability-card, .journey-list li, .contact-form");
+const revealTargets = document.querySelectorAll(".section-kicker, .intro-grid, .skills-block, .skill-group, .projects-heading, .project-feature, .project-card, .experience-intro, .experience-entry, .capabilities-heading, .capability-card, .journey-heading, .journey-list li, .contact-copy, .contact-form");
 const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+const staggerGroups = [".skill-groups", ".project-grid", ".capability-grid", ".journey-list"];
+staggerGroups.forEach((selector) => {
+  document.querySelectorAll(selector).forEach((group) => {
+    Array.from(group.children).forEach((element, index) => {
+      element.style.setProperty("--reveal-delay", `${Math.min(index * 90, 270)}ms`);
+    });
+  });
+});
+
+const hero = document.querySelector(".hero");
+if (hero && !motionPreference.matches) {
+  hero.addEventListener("pointermove", (event) => {
+    if (event.pointerType !== "mouse") return;
+    const bounds = hero.getBoundingClientRect();
+    const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+    const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+    hero.style.setProperty("--pointer-x", `${x}%`);
+    hero.style.setProperty("--pointer-y", `${y}%`);
+  });
+  hero.addEventListener("pointerleave", () => {
+    hero.style.removeProperty("--pointer-x");
+    hero.style.removeProperty("--pointer-y");
+  });
+}
+
 if ("IntersectionObserver" in window && !motionPreference.matches) {
   revealTargets.forEach((element) => element.classList.add("reveal"));
   const observer = new IntersectionObserver((entries, activeObserver) => {
@@ -63,3 +107,4 @@ if ("IntersectionObserver" in window && !motionPreference.matches) {
   }, { threshold: 0.12, rootMargin: "0px 0px -20px 0px" });
   revealTargets.forEach((element) => observer.observe(element));
 }
+
