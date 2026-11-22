@@ -119,16 +119,27 @@ const skillboardKeys = Array.from(document.querySelectorAll(".skill-key"));
 const skillName = document.querySelector("[data-skill-name]");
 const skillKind = document.querySelector("[data-skill-kind]");
 
-skillboardKeys.forEach((key) => {
-  key.addEventListener("click", () => {
-    skillboardKeys.forEach((candidate) => {
-      const selected = candidate === key;
-      candidate.classList.toggle("is-selected", selected);
-      candidate.setAttribute("aria-pressed", String(selected));
-    });
-    skillName.textContent = key.dataset.skillNameValue;
-    skillKind.textContent = key.dataset.skillKindValue;
+function selectSkillboardKey(index) {
+  const selectedKey = skillboardKeys[index];
+  if (!selectedKey) return;
+  skillboardKeys.forEach((candidate, candidateIndex) => {
+    const selected = candidateIndex === index;
+    candidate.classList.toggle("is-selected", selected);
+    candidate.setAttribute("aria-pressed", String(selected));
   });
+  skillName.textContent = selectedKey.dataset.skillNameValue;
+  skillKind.textContent = selectedKey.dataset.skillKindValue;
+}
+
+skillboardKeys.forEach((key, index) => {
+  key.addEventListener("click", () => {
+    selectSkillboardKey(index);
+    document.dispatchEvent(new CustomEvent("skillboard:select", { detail: { index } }));
+  });
+});
+
+document.addEventListener("skillboard:select", (event) => {
+  selectSkillboardKey(event.detail.index);
 });
 
 if (skillboardScene && finePointer.matches && !motionPreference.matches) {
