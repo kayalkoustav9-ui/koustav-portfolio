@@ -69,14 +69,25 @@ contactForm.addEventListener("submit", (event) => {
   window.location.href = mailto;
 });
 
-const revealTargets = document.querySelectorAll(".section-kicker, .intro-grid, .skills-block, .skill-group, .projects-heading, .project-feature, .project-card, .experience-intro, .experience-entry, .capabilities-heading, .capability-card, .journey-heading, .journey-list li, .contact-copy, .contact-form");
+const revealTargets = document.querySelectorAll(".section-kicker, .intro-grid, .intro-copy p, .education-note, .skills-heading, .skills-block, .skill-group, .tag-list span, .projects-heading, .project-feature, .project-feature-top, .project-copy > *, .pipeline-node, .project-card, .project-tags span, .experience-intro, .experience-intro > p, .experience-entry, .experience-meta, .experience-content > h3, .organization, .experience-description, .experience-list li, .capabilities-heading, .capability-card, .capability-card > svg, .journey-heading, .journey-heading > p, .journey-list li, .contact-copy, .contact-copy > p, .contact-details > *, .contact-form, .form-heading, .form-submit, .site-footer .footer-inner");
 const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
-const staggerGroups = [".skill-groups", ".project-grid", ".capability-grid", ".journey-list"];
-staggerGroups.forEach((selector) => {
+const staggerGroups = [
+  { selector: ".skill-groups, .project-grid, .capability-grid, .journey-list", step: 90, max: 270 },
+  { selector: ".tag-list, .project-tags", step: 45, max: 180 },
+  { selector: ".pipeline", step: 100, max: 300 },
+  { selector: ".experience-list, .contact-details", step: 65, max: 260 },
+];
+staggerGroups.forEach(({ selector, step, max }) => {
   document.querySelectorAll(selector).forEach((group) => {
     Array.from(group.children).forEach((element, index) => {
-      element.style.setProperty("--reveal-delay", `${Math.min(index * 90, 270)}ms`);
+      element.style.setProperty("--reveal-delay", `${Math.min(index * step, max)}ms`);
     });
+  });
+});
+
+document.querySelectorAll(".pipeline").forEach((pipeline) => {
+  pipeline.querySelectorAll(".pipeline-node").forEach((node, index) => {
+    node.style.setProperty("--node-order", index);
   });
 });
 
@@ -203,4 +214,11 @@ if ("IntersectionObserver" in window && !motionPreference.matches) {
     });
   }, { threshold: 0.12, rootMargin: "0px 0px -20px 0px" });
   revealTargets.forEach((element) => observer.observe(element));
+
+  const motionSurfaces = document.querySelectorAll(".section, .project-feature, .project-card, .experience-entry, .capability-card, .journey-list, .contact-form, .site-footer");
+  const motionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => entry.target.classList.toggle("is-in-view", entry.isIntersecting));
+  }, { threshold: 0, rootMargin: "-8% 0px -8% 0px" });
+  motionSurfaces.forEach((element) => motionObserver.observe(element));
 }
+
