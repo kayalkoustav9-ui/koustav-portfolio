@@ -485,7 +485,7 @@ svg { display: block; }
 }
 
 /* A lightweight CSS 3D keyboard: touch-friendly and independent of WebGL/CDNs. */
-.skillboard-scene { position: absolute; z-index: 2; bottom: 92px; left: -18px; width: min(392px, calc(100% + 10px)); color: #eaf1fb; pointer-events: auto; }
+.skillboard-scene { position: absolute; z-index: 2; bottom: 0; left: -18px; width: min(392px, calc(100% + 10px)); color: #eaf1fb; pointer-events: auto; }
 .skillboard-heading { display: flex; min-height: 19px; align-items: center; justify-content: space-between; gap: 10px; padding: 0 6px; font-family: var(--mono); font-size: 7px; letter-spacing: .12em; text-shadow: 0 2px 12px rgb(0 0 0 / 50%); }
 .skillboard-label { display: inline-flex; align-items: center; gap: 7px; color: #aab8cc; white-space: nowrap; }
 .skillboard-led { width: 6px; height: 6px; border-radius: 50%; background: #80dfc1; box-shadow: 0 0 12px rgb(128 223 193 / 80%); }
@@ -504,9 +504,10 @@ svg { display: block; }
 @keyframes skillboard-hover { 0%, 100% { transform: rotateX(var(--board-pitch, 57deg)) rotateZ(-17deg) rotateY(var(--board-yaw, -3deg)) translateY(0); } 50% { transform: rotateX(var(--board-pitch, 57deg)) rotateZ(-17deg) rotateY(var(--board-yaw, -3deg)) translateY(-4px); } }
 
 @media (max-width: 950px) {
-  .skillboard-scene { left: -8px; width: min(370px, calc(100% + 8px)); }
+  .skillboard-scene { bottom: 0; left: -8px; width: min(370px, calc(100% + 8px)); }
 }
 @media (max-width: 680px) {
+  .hero-art { min-height: 680px; }
   .skillboard-scene { bottom: 120px; left: 50%; width: min(370px, calc(100% + 8px)); transform: translateX(-50%); }
   .skillboard-perspective { height: 151px; padding-top: 12px; }
   .skillboard { gap: 4px; padding: 9px; }
@@ -514,6 +515,7 @@ svg { display: block; }
   .orbit-tag-robotics { top: 151px; bottom: auto; }
 }
 @media (max-width: 380px) {
+  .hero-art { min-height: 620px; }
   .skillboard-scene { bottom: 120px; width: calc(100% + 16px); }
   .skillboard-heading { padding-inline: 2px; font-size: 6px; }
   .skillboard-readout strong { font-size: 7px; }
