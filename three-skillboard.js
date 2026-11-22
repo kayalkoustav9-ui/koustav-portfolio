@@ -122,7 +122,7 @@ if (shell && mount && skillButtons.length) {
 
     const keyGeometry = new RoundedBoxGeometry(1.34, 0.3, 0.84, 3, 0.075);
     const keyMaterial = new THREE.MeshPhysicalMaterial({
-      color: 0x273850,
+      color: 0x344a68,
       metalness: 0.22,
       roughness: 0.25,
       clearcoat: 0.9,
@@ -147,7 +147,7 @@ if (shell && mount && skillButtons.length) {
       const context = canvas.getContext("2d");
       context.clearRect(0, 0, canvas.width, canvas.height);
       context.fillStyle = "#e5f0ff";
-      context.font = `600 ${label.length > 4 ? 42 : 58}px DM Mono, monospace`;
+      context.font = `600 ${label.length > 4 ? 72 : 96}px DM Mono, monospace`;
       context.textAlign = "center";
       context.textBaseline = "middle";
       context.fillText(label, canvas.width / 2, canvas.height / 2);
@@ -174,12 +174,11 @@ if (shell && mount && skillButtons.length) {
       keyMeshes.push(cap);
 
       const labelTexture = makeLegend(button.textContent.trim());
-      const legend = new THREE.Mesh(
-        new THREE.PlaneGeometry(0.86, 0.42),
-        new THREE.MeshBasicMaterial({ map: labelTexture, transparent: true, depthWrite: false })
+      const legend = new THREE.Sprite(
+        new THREE.SpriteMaterial({ map: labelTexture, transparent: true, depthWrite: false, toneMapped: false })
       );
-      legend.rotation.x = -Math.PI / 2;
-      legend.position.y = 0.846;
+      legend.position.y = 0.875;
+      legend.scale.set(1.02, 0.52, 1);
       keyGroup.add(legend);
 
       keyObjects.push({ group: keyGroup, cap, legend, labelTexture, pressed: 0 });
@@ -246,7 +245,7 @@ if (shell && mount && skillButtons.length) {
       const width = Math.max(mount.clientWidth, 1);
       const height = Math.max(mount.clientHeight, 1);
       const aspect = width / height;
-      const viewHeight = 5.1;
+      const viewHeight = 4.7;
       camera.left = -(viewHeight * aspect) / 2;
       camera.right = (viewHeight * aspect) / 2;
       camera.top = viewHeight / 2;
