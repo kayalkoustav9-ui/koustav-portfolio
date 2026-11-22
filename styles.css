@@ -493,7 +493,11 @@ svg { display: block; }
 .skillboard-readout strong { color: #a9caff; font-size: 8px; font-weight: 500; }
 .skillboard-perspective { position: relative; height: 154px; padding: 13px 5px 18px; perspective: 950px; }
 .skillboard-perspective::before { position: absolute; z-index: -1; inset: 28px 8% 3px; border-radius: 50%; background: rgb(45 113 202 / 24%); filter: blur(24px); content: ""; }
+.skillboard-webgl { position: absolute; z-index: 1; inset: 0; overflow: visible; pointer-events: auto; }
+.skillboard-webgl canvas { display: block; width: 100%; height: 100%; }
 .skillboard { position: relative; display: grid; width: 100%; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 5px; padding: 11px; transform: rotateX(var(--board-pitch, 57deg)) rotateZ(-17deg) rotateY(var(--board-yaw, -3deg)); transform-origin: 50% 60%; transform-style: preserve-3d; border: 1px solid rgb(176 199 231 / 26%); border-radius: 13px; background: linear-gradient(145deg, #27364d, #121b2b 70%); box-shadow: 0 9px 0 #0b111d, 0 13px 0 #080d16, 0 27px 35px rgb(0 0 0 / 47%), inset 0 1px 0 rgb(255 255 255 / 12%); animation: skillboard-hover 5.5s ease-in-out infinite; }
+.skillboard-scene.is-webgl .skillboard { z-index: 2; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+.skillboard-scene.is-webgl .skillboard:focus-within { z-index: 3; opacity: 1; pointer-events: auto; }
 .skill-key { position: relative; display: grid; min-width: 0; height: 34px; place-items: center; transform: translateZ(9px); border: 1px solid rgb(255 255 255 / 11%); border-radius: 5px; background: linear-gradient(145deg, #34455f, #1c293d); box-shadow: 0 4px 0 #101827, 0 7px 0 #0c1422, 0 10px 11px rgb(0 0 0 / 27%), inset 0 1px 0 rgb(255 255 255 / 9%); color: #c9d6e8; cursor: pointer; font-family: var(--mono); font-size: 8px; font-weight: 500; letter-spacing: .045em; transition: transform .2s ease, background .2s ease, color .2s ease, box-shadow .2s ease; }
 .skill-key:hover, .skill-key:focus-visible { z-index: 1; transform: translateY(-3px) translateZ(11px); border-color: rgb(149 190 255 / 65%); color: #fff; outline: 0; }
 .skill-key:focus-visible { box-shadow: 0 0 0 2px #152238, 0 0 0 4px #91bcff, 0 7px 0 #0c1422, 0 12px 18px rgb(0 0 0 / 35%); }
