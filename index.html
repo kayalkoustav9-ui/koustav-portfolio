@@ -22,8 +22,13 @@
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=3d-3" />
-    <script src="script.js?v=3d-1" defer></script>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="stylesheet" href="styles.css?v=webgl-1" />
+    <script src="script.js?v=webgl-1" defer></script>
+    <script type="importmap">
+      {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.184.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/"}}
+    </script>
+    <script type="module" src="three-skillboard.js?v=webgl-1"></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -91,6 +96,7 @@
                 <span class="skillboard-readout" aria-live="polite"><strong data-skill-name>PYTHON</strong><span data-skill-kind>CORE LANGUAGE</span></span>
               </div>
               <div class="skillboard-perspective">
+                <div class="skillboard-webgl" aria-hidden="true"></div>
                 <div class="skillboard" role="group" aria-label="Select a skill to explore">
                   <button class="skill-key is-selected" type="button" data-skill-name-value="PYTHON" data-skill-kind-value="CORE LANGUAGE" aria-label="Python, core language" aria-pressed="true">PY</button>
                   <button class="skill-key" type="button" data-skill-name-value="C" data-skill-kind-value="PROGRAMMING" aria-label="C programming" aria-pressed="false">C</button>
