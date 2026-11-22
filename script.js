@@ -114,6 +114,38 @@ if (heroArtwork && finePointer.matches && !motionPreference.matches) {
   });
 }
 
+const skillboardScene = document.querySelector("[data-skillboard]");
+const skillboardKeys = Array.from(document.querySelectorAll(".skill-key"));
+const skillName = document.querySelector("[data-skill-name]");
+const skillKind = document.querySelector("[data-skill-kind]");
+
+skillboardKeys.forEach((key) => {
+  key.addEventListener("click", () => {
+    skillboardKeys.forEach((candidate) => {
+      const selected = candidate === key;
+      candidate.classList.toggle("is-selected", selected);
+      candidate.setAttribute("aria-pressed", String(selected));
+    });
+    skillName.textContent = key.dataset.skillNameValue;
+    skillKind.textContent = key.dataset.skillKindValue;
+  });
+});
+
+if (skillboardScene && finePointer.matches && !motionPreference.matches) {
+  skillboardScene.addEventListener("pointermove", (event) => {
+    if (event.pointerType !== "mouse") return;
+    const bounds = skillboardScene.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+    skillboardScene.style.setProperty("--board-yaw", `${(-3 + x * 12).toFixed(2)}deg`);
+    skillboardScene.style.setProperty("--board-pitch", `${(57 - y * 9).toFixed(2)}deg`);
+  });
+  skillboardScene.addEventListener("pointerleave", () => {
+    skillboardScene.style.removeProperty("--board-yaw");
+    skillboardScene.style.removeProperty("--board-pitch");
+  });
+}
+
 if (finePointer.matches && !motionPreference.matches) {
   document.querySelectorAll(".project-card, .project-feature").forEach((card) => {
     card.addEventListener("pointermove", (event) => {
@@ -161,4 +193,3 @@ if ("IntersectionObserver" in window && !motionPreference.matches) {
   }, { threshold: 0.12, rootMargin: "0px 0px -20px 0px" });
   revealTargets.forEach((element) => observer.observe(element));
 }
-
