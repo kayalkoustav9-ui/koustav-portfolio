@@ -533,7 +533,7 @@ svg { display: block; }
 }
 
 /* Page-wide motion: reveal content in sequence and keep section accents active only nearby. */
-.js-enabled .section { position: relative; isolation: isolate; }
+.js-enabled .section { position: relative; isolation: isolate; overflow-x: clip; }
 .js-enabled .section > .container { position: relative; z-index: 1; }
 .js-enabled .section::before { position: absolute; z-index: 0; top: 8%; right: -150px; width: min(48vw, 500px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, var(--section-glow, rgb(59 130 246 / 11%)), transparent 69%); filter: blur(12px); opacity: 0; pointer-events: none; content: ""; transition: opacity .8s ease; }
 .js-enabled .section.is-in-view::before { opacity: .8; animation: ambient-drift 13s ease-in-out infinite alternate; }
