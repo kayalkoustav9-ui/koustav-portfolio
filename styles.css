@@ -65,8 +65,9 @@ svg { display: block; }
 .hero-location { display: flex; align-items: center; gap: 10px; margin-top: 44px; color: #96a4b8; font-size: 12px; }
 .hero-location svg { width: 17px; fill: none; stroke: #83aef5; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
 .hero-art { position: relative; min-height: 590px; justify-self: end; width: min(100%, 455px); margin-top: 15px; }
-.portrait-wrap { position: absolute; top: 20px; right: 48px; width: min(80%, 345px); aspect-ratio: .82; overflow: hidden; border: 1px solid rgb(255 255 255 / 15%); background: #e7e1d7; box-shadow: 20px 22px 0 rgb(59 130 246 / 12%); }
-.portrait-image { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 32%; }
+.portrait-wrap { position: absolute; top: 20px; right: 48px; width: min(80%, 345px); aspect-ratio: .82; overflow: visible; border: 0; background: transparent; isolation: isolate; }
+.portrait-wrap::before { position: absolute; z-index: -1; inset: 12% 6% 5%; border-radius: 50%; background: radial-gradient(ellipse, rgb(59 130 246 / 23%), transparent 70%); filter: blur(24px); content: ""; }
+.portrait-image { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; filter: drop-shadow(0 22px 34px rgb(0 0 0 / 25%)); }
 .portrait-index { position: absolute; z-index: 2; top: 15px; left: 15px; padding: 5px 8px; background: rgb(11 18 32 / 78%); color: #fff; font-family: var(--mono); font-size: 8px; letter-spacing: .08em; }
 .portrait-caption { position: absolute; right: 0; bottom: 0; left: 0; display: flex; flex-direction: column; gap: 1px; padding: 14px 17px; background: linear-gradient(transparent, rgb(11 18 32 / 76%)); color: white; font-size: 12px; line-height: 1.5; }
 .portrait-caption span:first-child { font-family: var(--display); font-size: 16px; font-weight: 500; }
